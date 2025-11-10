@@ -12,12 +12,22 @@ const app = express();
 
 app.use(cors({
     origin: 'http://localhost:3000',
-    credentials: true
-  }));
+    credentials: true,
+}));
 
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/sessions', sessionRouter);
 
-app.listen(process.env.PORT || 5050);
+app.get('/', (req, res) => {
+    res.send('API is running');
+});
+
+app.use((err, req, res, next) => {
+    console.error('Server Error:', err.stack);
+    res.status(500).json({ message: 'Server error', error: err.message });
+});
+
+const PORT = process.env.PORT || 5050;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,7 +1,5 @@
 import Session from '../models/Session.js';
-import User from '../models/User.js';
 
-// Helper to enhance session for frontend
 const enhanceSession = (session) => ({
   _id: session._id,
   title: session.title,
@@ -15,24 +13,50 @@ const enhanceSession = (session) => ({
 });
 
 export const createSession = async (req, res) => {
-  try {
-    const { title, mode, stats } = req.body;
-
-    const session = await Session.create({
-      user: req.user._id,
-      title,
-      mode,
-      stats,
-    });
-
-    await session.populate('user', 'username email');
-
-    res.status(201).json(enhanceSession(session));
-  } catch (err) {
-    console.error('Create session error:', err);
-    res.status(500).json({ message: 'Server error creating session' });
-  }
-};
+    console.log("Incoming session data:", req.body);
+    try {
+      const {
+        title,
+        mode,
+        points,
+        assists,
+        rebounds,
+        steals,
+        blocks,
+        turnovers,
+        shotsMade,
+        shotsAttempted,
+        shootingPercentage,
+      } = req.body;
+  
+      const session = await Session.create({
+        user: req.user._id,
+        title,
+        mode,
+        stats: {
+          points,
+          assists,
+          rebounds,
+          steals,
+          blocks,
+          turnovers,
+          shotsMade,
+          shotsAttempted,
+          shootingPercentage,
+        },
+      });
+  
+      await session.populate("user", "username email");
+  
+      res.status(201).json({
+        message: "Session created successfully",
+        session,
+      });
+    } catch (err) {
+      console.error("Create session error:", err);
+      res.status(500).json({ message: "Server error creating session" });
+    }
+  };   
 
 export const getSessions = async (req, res) => {
   try {

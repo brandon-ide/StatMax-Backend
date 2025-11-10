@@ -20,7 +20,7 @@ const sessionSchema = new mongoose.Schema({
   },
   mode: {
     type: String,
-    enum: ['official', 'pickup', 'practice', 'drill'],
+    enum: ['Official Game', 'Pickup Game', 'Practice', 'Shooting Drill'],
     required: [true, 'Mode is required']
   },
   title: {
