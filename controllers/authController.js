@@ -66,3 +66,22 @@ export const login = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// -------------------- GET PROFILE --------------------
+export const getProfile = async (req, res) => {
+  try {
+    // req.user comes from authMiddleware
+    if (!req.user) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
+
+    const user = await User.findById(req.user._id).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json(user);
+  } catch (err) {
+    console.error("Profile fetch error:", err);
+    res.status(500).json({ message: "Server error fetching profile" });
+  }
+};
+

@@ -10,7 +10,8 @@ router.post('/', protect, async (req, res) => {
 });
 
 router.get('/', protect, async (req, res) => {
-  const sessions = await Session.find({ user: req.user._id });
+  const sessions = await Session.find({ user: req.user._id })
+  .sort({date: -1});
   res.json(sessions);
 });
 
