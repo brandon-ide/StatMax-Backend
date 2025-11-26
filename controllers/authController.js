@@ -22,7 +22,12 @@ export const signup = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'User email already exists' });
+    }
+
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ error: "Username is already taken" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -70,7 +75,7 @@ export const login = async (req, res) => {
 // -------------------- GET PROFILE --------------------
 export const getProfile = async (req, res) => {
   try {
-    // req.user comes from authMiddleware
+
     if (!req.user) {
       return res.status(401).json({ message: "Not authorized" });
     }

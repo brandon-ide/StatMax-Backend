@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
     const totals = {};
     users.forEach((u) => {
       totals[u._id] = {
+        _id: u._id.toString(),
         username: u.username,
         points: 0,
         rebounds: 0,
