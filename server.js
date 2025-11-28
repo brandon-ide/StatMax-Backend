@@ -12,8 +12,10 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000',
-    origin: 'https://statmaxapp.me',
+origin: ['http://localhost:5173',
+        'http://localhost:3000',
+        'https://www.statmaxapp.me'
+        ],
     credentials: true,
 }));
 
