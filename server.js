@@ -1,12 +1,12 @@
+import 'dotenv/config';
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';
 import authRouter from './routes/authRoutes.js';
 import sessionRouter from './routes/sessionRoutes.js';
 import rankingsRoutes from "./routes/rankings.js";
+import coachRoutes from "./routes/coach.js"
 
-dotenv.config();
 connectDB();
 
 const app = express();
@@ -21,6 +21,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/sessions', sessionRouter);
 app.use("/api/rankings", rankingsRoutes);
+app.use("/api/coach", coachRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running');

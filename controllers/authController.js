@@ -1,8 +1,7 @@
 import User from '../models/User.js';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 import generateToken from '../utils/generateToken.js';
 
-// Helper to format user response
 const enhanceUser = (user) => ({
   _id: user._id,
   username: user.username,
@@ -11,7 +10,7 @@ const enhanceUser = (user) => ({
   token: generateToken(user._id)
 });
 
-// -------------------- SIGNUP --------------------
+// ---- SIGNUP ----
 export const signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -46,7 +45,7 @@ export const signup = async (req, res) => {
   }
 };
 
-// -------------------- LOGIN --------------------
+// ---- LOGIN ----
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -72,7 +71,7 @@ export const login = async (req, res) => {
   }
 };
 
-// -------------------- GET PROFILE --------------------
+// ---- GET PROFILE ----
 export const getProfile = async (req, res) => {
   try {
 
